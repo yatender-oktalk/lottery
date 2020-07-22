@@ -9,12 +9,12 @@ contract Lottery {
     }
 
     function enter() public payable {
-        require(msg.value > .01 ether);
+        require(msg.value > .01 ether, "player have no money");
         players.push(msg.sender);
     }
 
     function random() private view returns (uint256) {
-        return uint256(keccak256(block.difficulty, now, players));
+        return uint256(keccak256(block.difficulty, block.timestamp, players));
     }
 
     function pickWinner() public restricted {
@@ -24,9 +24,11 @@ contract Lottery {
     }
 
     modifier restricted() {
-        require(msg.sender == manager);
+        require(msg.sender == manager, "manager not found");
         _;
     }
 
-    function getPlayers() public view returns (uint256) {}
+    function getPlayers() public view returns (uint256) {
+        return players;
+    }
 }

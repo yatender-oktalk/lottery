@@ -61,4 +61,17 @@ describe('Lottery Contract', () => {
     assert.equal(accounts[2], players[2]);
     assert.equal(3, players.length);
   });
+
+  it('requires a minimum account to enter', async () => {
+    try {
+      await lottery.methods.enter().send({
+        from: accounts[0],
+        value: web3.utils.toWei("0.01", "ether")
+      });
+      assert(false);
+    } catch (error) {
+      console.log(error);
+      assert(error);
+    }
+  });
 });

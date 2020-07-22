@@ -9,7 +9,7 @@ contract Lottery {
     }
 
     function enter() public payable {
-        require(msg.value > .01 ether, "player have no money");
+        require(msg.value > .01 ether);
         players.push(msg.sender);
     }
 
@@ -24,11 +24,11 @@ contract Lottery {
     }
 
     modifier restricted() {
-        require(msg.sender == manager, "manager not found");
+        require(msg.sender == manager);
         _;
     }
 
-    function getPlayers() public view returns (uint256) {
+    function getPlayers() public view returns (address[]) {
         return players;
     }
 }
